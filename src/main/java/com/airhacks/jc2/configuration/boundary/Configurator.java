@@ -29,6 +29,11 @@ public class Configurator {
 
     public final static String CONFIGURATION = "configuration";
 
+    /**
+     * Initial set of key-values can be exposed with @Produces and merged at
+     * startup with the cache. The existing entries in the cache are going to be
+     * overridden.
+     */
     @Inject
     Instance<Map<String, String>> initialValues;
 
@@ -45,6 +50,12 @@ public class Configurator {
         }
     }
 
+    /**
+     *
+     * @param ip represents the field where the configuration is injected
+     * @return resolved value. The name of the class is concatenated with the
+     * field name and used as a key.
+     */
     @Produces
     public String expose(InjectionPoint ip) {
         String className = ip.getMember().getDeclaringClass().getName();
