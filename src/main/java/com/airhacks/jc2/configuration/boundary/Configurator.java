@@ -1,27 +1,25 @@
 package com.airhacks.jc2.configuration.boundary;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
+import java.util.Map;
 import javax.cache.Cache;
 import javax.cache.CacheManager;
 import javax.cache.Caching;
 import javax.cache.configuration.Configuration;
 import javax.cache.configuration.MutableConfiguration;
 import javax.cache.spi.CachingProvider;
-import javax.ejb.ConcurrencyManagement;
-import javax.ejb.ConcurrencyManagementType;
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Destroyed;
+import javax.enterprise.context.Initialized;
+import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
+import javax.inject.Inject;
 
 /**
  *
  * @author airhacks.com
  */
-@Singleton
-@Startup
-@ConcurrencyManagement(ConcurrencyManagementType.BEAN)
+@ApplicationScoped
 public class Configurator {
 
     Cache<String, String> store;
@@ -30,12 +28,22 @@ public class Configurator {
 
     public final static String CONFIGURATION = "configuration";
 
-    @PostConstruct
-    public void initCache() {
+    @Inject
+    Preloader preloader;
+
+    public void init(@Observes @Initialized(ApplicationScoped.class) Object doesntMatter) {
         this.cachingProvider = Caching.getCachingProvider();
         this.cacheManager = cachingProvider.getCacheManager();
         Configuration<String, String> configuration = getConfiguration();
-        this.store = this.cacheManager.createCache(CONFIGURATION, configuration);
+        this.store = this.cacheManager.getCache(CONFIGURATION, String.class, String.class);
+        if (this.store == null) {
+            this.store = this.cacheManager.createCache(CONFIGURATION, configuration);
+        }
+        Map<String, String> initialConfiguration = preloader.getInitialConfiguration();
+        if (!initialConfiguration.isEmpty()) {
+            this.store.putAll(initialConfiguration);
+        }
+
     }
 
     @Produces
@@ -43,7 +51,7 @@ public class Configurator {
         String className = ip.getMember().getDeclaringClass().getName();
         String fieldName = ip.getMember().getName();
         String key = className + "." + fieldName;
-        return store.get(key);
+        return this.store.get(key);
     }
 
     public Configuration<String, String> getConfiguration() {
@@ -55,8 +63,8 @@ public class Configurator {
         return configuration;
     }
 
-    @PreDestroy
-    public void shutdown() {
+    public void shutdown(@Observes @Destroyed(ApplicationScoped.class) Object doesntMatter) {
+        this.cacheManager.destroyCache(CONFIGURATION);
         this.cachingProvider.close();
     }
 
