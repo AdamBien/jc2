@@ -11,6 +11,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Destroyed;
 import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
+import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
@@ -29,7 +30,7 @@ public class Configurator {
     public final static String CONFIGURATION = "configuration";
 
     @Inject
-    Preloader preloader;
+    Instance<Map<String, String>> initialValues;
 
     public void init(@Observes @Initialized(ApplicationScoped.class) Object doesntMatter) {
         this.cachingProvider = Caching.getCachingProvider();
@@ -39,11 +40,9 @@ public class Configurator {
         if (this.store == null) {
             this.store = this.cacheManager.createCache(CONFIGURATION, configuration);
         }
-        Map<String, String> initialConfiguration = preloader.getInitialConfiguration();
-        if (!initialConfiguration.isEmpty()) {
-            this.store.putAll(initialConfiguration);
+        for (Map<String, String> initial : initialValues) {
+            this.store.putAll(initial);
         }
-
     }
 
     @Produces

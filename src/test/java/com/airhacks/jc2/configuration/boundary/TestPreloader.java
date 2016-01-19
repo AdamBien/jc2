@@ -2,18 +2,17 @@ package com.airhacks.jc2.configuration.boundary;
 
 import java.util.HashMap;
 import java.util.Map;
-import javax.enterprise.inject.Specializes;
+import javax.enterprise.inject.Produces;
 
 /**
  *
  * @author airhacks.com
  */
-@Specializes
-public class TestPreloader extends Preloader {
+public class TestPreloader {
 
     public final static String EXPECTED = "hey duke";
 
-    @Override
+    @Produces
     public Map<String, String> getInitialConfiguration() {
         Map<String, String> initial = new HashMap<>();
         String className = InjectionTargetSupport.class.getName();
