@@ -1,5 +1,6 @@
 package com.airhacks.jc2.boundary;
 
+import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -12,11 +13,11 @@ import javax.ws.rs.Path;
 public class HelloResource {
 
     @Inject
-    String greeting;
+    Instance<String> greeting;
 
     @GET
     public String hello() {
-        return greeting;
+        return greeting.get();
     }
 
 }
