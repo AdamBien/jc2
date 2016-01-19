@@ -40,7 +40,7 @@ The key `com.airhacks.jc2.boundary.HelloResource.greeting` is resolved in the ca
 
 An initial set of value can be preloaded and merged by exposing a `Map<String,String>` like e.g.:
 
-```
+```java
 import java.util.HashMap;
 import java.util.Map;
 import javax.enterprise.inject.Produces;
