@@ -11,6 +11,7 @@ import javax.enterprise.inject.Produces;
 public class TestPreloader {
 
     public final static String EXPECTED = "hey duke";
+    public final static String CUSTOM_EXPECTED = "hey duke";
 
     @Produces
     public Map<String, String> getInitialConfiguration() {
@@ -18,6 +19,7 @@ public class TestPreloader {
         String className = InjectionTargetSupport.class.getName();
         String fieldName = "configured";
         initial.put(className + "." + fieldName, EXPECTED);
+        initial.put("msg", EXPECTED);
         return initial;
     }
 

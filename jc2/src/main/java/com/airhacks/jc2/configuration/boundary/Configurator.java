@@ -13,6 +13,7 @@ import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.Annotated;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
 
@@ -57,11 +58,17 @@ public class Configurator {
      * field name and used as a key.
      */
     @Produces
-    public String expose(InjectionPoint ip) {
+    public String getString(InjectionPoint ip) {
         String className = ip.getMember().getDeclaringClass().getName();
-        String fieldName = ip.getMember().getName();
-        String key = className + "." + fieldName;
-        return this.store.get(key);
+        String key = className + "." + ip.getMember().getName();
+        String fieldName = computeKeyName(ip.getAnnotated(), key);
+        return this.store.get(fieldName);
+    }
+
+    String computeKeyName(Annotated annotated, String key) {
+        Configurable annotation = annotated.getAnnotation(Configurable.class);
+        return annotation == null ? key : annotation.value();
+
     }
 
     public Configuration<String, String> getConfiguration() {

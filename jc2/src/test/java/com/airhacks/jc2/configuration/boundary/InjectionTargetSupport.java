@@ -15,12 +15,20 @@ public class InjectionTargetSupport {
     @Inject
     Instance<String> configured;
 
+    @Inject
+    @Configurable("msg")
+    private String message;
+
     public String getGreeting() {
         return greeting;
     }
 
     public String getConfigured() {
         return configured.get();
+    }
+
+    public String getWithCustomKey() {
+        return message;
     }
 
 }

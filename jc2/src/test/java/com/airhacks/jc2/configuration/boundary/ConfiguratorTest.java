@@ -7,9 +7,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
 
 /**
  *
@@ -34,6 +31,13 @@ public class ConfiguratorTest {
     public void injectConfiguredValue() {
         String actual = this.cut.getConfigured();
         assertThat(actual, is(TestPreloader.EXPECTED));
+    }
+
+    @Test
+    public void customNamedValue() {
+        String actual = this.cut.getWithCustomKey();
+        assertThat(actual, is(TestPreloader.CUSTOM_EXPECTED));
+
     }
 
 }
