@@ -19,7 +19,6 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import javax.enterprise.util.Nonbinding;
 
 /**
  *
@@ -29,6 +28,10 @@ import javax.enterprise.util.Nonbinding;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Configurable {
 
-    @Nonbinding
+    /**
+     * Overrides the default key.
+     *
+     * @return the configuration key.
+     */
     String value();
 }
