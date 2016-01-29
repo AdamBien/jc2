@@ -65,6 +65,33 @@ public class Configurator {
         return this.store.get(fieldName);
     }
 
+    @Produces
+    public long getLong(InjectionPoint ip) {
+        String stringValue = getString(ip);
+        if (stringValue == null) {
+            return 0;
+        }
+        return Long.parseLong(stringValue);
+    }
+
+    @Produces
+    public int getInteger(InjectionPoint ip) {
+        String stringValue = getString(ip);
+        if (stringValue == null) {
+            return 0;
+        }
+        return Integer.parseInt(stringValue);
+    }
+
+    @Produces
+    public boolean getBoolean(InjectionPoint ip) {
+        String stringValue = getString(ip);
+        if (stringValue == null) {
+            return false;
+        }
+        return Boolean.parseBoolean(stringValue);
+    }
+
     String computeKeyName(Annotated annotated, String key) {
         Configurable annotation = annotated.getAnnotation(Configurable.class);
         return annotation == null ? key : annotation.value();

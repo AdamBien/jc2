@@ -20,6 +20,9 @@ public class TestPreloader {
         String fieldName = "configured";
         initial.put(className + "." + fieldName, EXPECTED);
         initial.put("msg", EXPECTED);
+        initial.put(className + "." + "intValue", "21");
+        initial.put(className + "." + "longValue", "42");
+        initial.put(className + "." + "booleanValue", "true");
         return initial;
     }
 

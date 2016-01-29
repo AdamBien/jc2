@@ -19,6 +19,15 @@ public class InjectionTargetSupport {
     @Configurable("msg")
     private String message;
 
+    @Inject
+    private int intValue;
+
+    @Inject
+    private long longValue;
+
+    @Inject
+    private boolean booleanValue;
+
     public String getGreeting() {
         return greeting;
     }
@@ -29,6 +38,22 @@ public class InjectionTargetSupport {
 
     public String getWithCustomKey() {
         return message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public int getIntValue() {
+        return intValue;
+    }
+
+    public long getLongValue() {
+        return longValue;
+    }
+
+    public boolean isBooleanValue() {
+        return booleanValue;
     }
 
 }
