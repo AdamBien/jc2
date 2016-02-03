@@ -28,6 +28,18 @@ public class InjectionTargetSupport {
     @Inject
     private boolean booleanValue;
 
+    @Inject
+    private String notExistingString;
+
+    @Inject
+    private boolean notExistingBoolean;
+
+    @Inject
+    private long notExistingLong;
+
+    @Inject
+    private int notExistingInt;
+
     public String getGreeting() {
         return greeting;
     }
@@ -56,4 +68,19 @@ public class InjectionTargetSupport {
         return booleanValue;
     }
 
+    public boolean isNotExistingBoolean() {
+        return notExistingBoolean;
+    }
+
+    public long getNotExistingLong() {
+        return notExistingLong;
+    }
+
+    public int getNotExistingInt() {
+        return notExistingInt;
+    }
+
+    public String getNotExistingString() {
+        return notExistingString;
+    }
 }

@@ -3,6 +3,7 @@ package com.airhacks.jc2.configuration.boundary;
 import javax.inject.Inject;
 import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -54,6 +55,25 @@ public class ConfiguratorTest {
     @Test
     public void booleanValue() {
         assertTrue(this.cut.isBooleanValue());
+    }
+
+    @Test
+    public void notExistingBoolean() {
+        assertFalse(this.cut.isNotExistingBoolean());
+    }
+
+    @Test
+    public void notExistingInteger() {
+        assertThat(this.cut.getNotExistingInt(), is(0));
+    }
+
+    @Test
+    public void notExistingLong() {
+        assertThat(this.cut.getNotExistingLong(), is(0l));
+    }
+
+    public void notExistingString() {
+        assertNull(this.cut.getNotExistingString());
     }
 
 }
