@@ -72,6 +72,7 @@ public class ConfiguratorTest {
         assertThat(this.cut.getNotExistingLong(), is(0l));
     }
 
+    @Test
     public void notExistingString() {
         assertNull(this.cut.getNotExistingString());
     }
