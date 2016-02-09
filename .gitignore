@@ -11,3 +11,6 @@ buildNumber.properties
 /release.sh
 /snapshot.sh
 /jc2/nbproject/
+/jc2-env-vars/nbproject/
+/jc2-env-vars/release.sh
+/jc2-env-vars/snapshot.sh
