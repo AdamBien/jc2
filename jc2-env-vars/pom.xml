@@ -8,7 +8,7 @@
     </parent>
     <groupId>com.airhacks</groupId>
     <artifactId>jc2-env-vars</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.1-SNAPSHOT</version>
     <description>Preloads the cache with environment variables
         and makes them injectable. This dependency can be used instead of jc2.
     </description>
